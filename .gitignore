@@ -20,6 +20,4 @@ project/plugins/project/
 project/target/
 src/test/
 credentials/
-/resource/client_id.json
-/resource/spreadsheet_id.txt
-/resource/sheet_name.txt
+resource/

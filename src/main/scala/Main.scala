@@ -21,12 +21,13 @@ object Main {
   private val JSON_FACTORY = JacksonFactory.getDefaultInstance
 
     def main(args: Array[String]): Unit = {
-    println(s"file: ${args(0)}")
-    val items = parse(args(0))
-    val months = createMonths(items)
-    updateNetWorth(months)
-    updatePensionPercentage(items)
-  }
+      println(s"file: ${args(0)}")
+      val items = parse(args(0))
+      val months = createMonths(items)
+      updateNetWorth(months)
+      updatePensionPercentage(items)
+      updateAssets(items)
+    }
 
   private def parse(file: String): Seq[Item] = {
     val currency = Source.fromResource("currency.txt").mkString
@@ -81,6 +82,16 @@ object Main {
     })
 
     updateSpreadsheets(values, Source.fromResource("pension_percentage_sheet_name.txt").mkString)
+  }
+
+  private def updateAssets(items: Seq[Item]): Unit = {
+    val assets = items.groupBy(_.month).maxBy(_._1)._2.filter(_.balance > 0).sortBy(_.balance).reverse
+
+    val values: util.List[util.List[AnyRef]] = new util.ArrayList()
+    values.add(util.Arrays.asList("חשבון", "מאזן"))
+    assets.foreach(item => values.add(util.Arrays.asList(item.account, item.balance.toString)))
+
+    updateSpreadsheets(values, Source.fromResource("assets_sheet_name.txt").mkString)
   }
 
   private def updateSpreadsheets(values: util.List[util.List[AnyRef]], sheetName: String): Unit = {

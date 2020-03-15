@@ -3,6 +3,7 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util
 import java.util.{Collections, Locale}
+
 import com.github.tototoshi.csv._
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver
@@ -13,8 +14,11 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.store.FileDataStoreFactory
 import com.google.api.services.sheets.v4.{Sheets, SheetsScopes}
 import com.google.api.services.sheets.v4.model.ValueRange
+
 import scala.collection.mutable
 import scala.io.Source
+import scala.math.Ordering.Double.TotalOrdering
+
 
 object Main {
 
